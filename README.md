@@ -1,22 +1,35 @@
-# 📊 SQL & PostgreSQL Study Repository
+Here is the professional English translation for your README.md. I’ve polished the technical terms to match industry standards (e.g., using "Spinning up" for starting environments).
 
-Repositório dedicado ao estudo avançado de SQL, focado em Engenharia de Dados.
+📊 SQL & PostgreSQL Study Repository
+A dedicated repository for advanced SQL studies, with a focus on Data Engineering.
 
-## 🚀 Como subir o ambiente
-1. Certifique-se de ter o Docker instalado.
-2. No terminal, execute: `docker-compose up -d`
-3. Conecte via **pgAdmin** ou **VS Code SQL Tools**:
-   - **Host:** localhost
-   - **User:** ricardo_admin
-   - **Pass:** sua_senha_forte
+🚀 Environment Setup
+Ensure you have Docker installed.
 
-## 📚 Módulos de Estudo
-- [Conceitos Fundamentais](./docs/concepts/01-basics.md)
-- [Window Functions Avançadas](./docs/concepts/02-window-functions.md)
+Run the following command in your terminal:
 
-## 🛠 Exercícios Hands-on
-- [Desafios Sakila - Nível Fácil](./exercises/sakila/easy_challenges.sql)
-- [Projeto ETL Financeiro (Scripts SQL)](./exercises/finance-etl/transformations.sql)
+docker-compose up -d
 
----
-*Ambiente compatível com Manjaro Linux (KDE) e macOS.*
+Connect via pgAdmin, DBeaver, or VS Code SQL Tools:
+
+Host: localhost
+
+Port: 5432
+
+User: ricardo_admin
+
+Password: ****
+
+📚 Study Modules
+[ ] Module 1: DDL & Schema Design (Current)
+
+[ ] Module 2: Joins & Complex Relationships
+
+[ ] Module 3: Window Functions & Analytics
+
+🛠 Hands-on Exercises
+[ ] Exercise 01: Music Streaming Schema Creation
+
+[ ] Exercise 02: Populating Data with Python/SQL scripts
+
+Environment compatible with Manjaro Linux (KDE) and macOS.
