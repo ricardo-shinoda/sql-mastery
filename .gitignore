@@ -1,0 +1,17 @@
+# Docker data (importante!)
+postgres_data/
+
+# macOS files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# Logs e temporários
+*.log
+npm-debug.log*
+
+# Python/Env (se usar para ETL futuramente)
+__pycache__/
+.env

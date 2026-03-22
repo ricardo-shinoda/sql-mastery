@@ -1,0 +1,18 @@
+services:
+  postgres-db:
+    image: postgres:latest
+    container_name: sql_study_postgres
+    environment:
+      POSTGRES_USER: ricardo_admin
+      POSTGRES_PASSWORD: Lakers32!Bulls23!
+      POSTGRES_DB: sql_study
+    ports:
+      - "5432:5432"
+    volumes:
+      # Ajustamos aqui para o novo padrão recomendado pelo log
+      - postgres_data:/var/lib/postgresql
+      - ./scripts/db-init:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
