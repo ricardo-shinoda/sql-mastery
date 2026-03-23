@@ -3,8 +3,8 @@ services:
     image: postgres:latest
     container_name: sql_study_postgres
     environment:
-      POSTGRES_USER: ricardo_admin
-      POSTGRES_PASSWORD: Lakers32!Bulls23!
+      POSTGRES_USER: ${DB_USER} 
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: sql_study
     ports:
       - "5432:5432"
