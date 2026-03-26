@@ -5,11 +5,10 @@
 -- country_of_origin: Varchar.
 
 CREATE TABLE artist(
-    artist_id BIGSERIAL NOT NULL,
+    artist_id BIGSERIAL PRIMARY KEY,
     artist_name VARCHAR(100) NOT NULL,
     genre VARCHAR(50),
     country_of_origin VARCHAR (50)
-    CONSTRAINT artist_artist_id_pk PRIMARY KEY (artist_id)
 );
 
 -- Table2: albums
@@ -19,11 +18,11 @@ CREATE TABLE artist(
 -- release_year: Integer.
 
 CREATE TABLE album(
-    album_id BIGSERIAL NOT NULL,
+    album_id BIGSERIAL PRIMARY KEY,
     artist_id INTEGER NOT NULL,
     title VARCHAR(100) NOT NULL,
     release_year INTEGER NOT NULL,
-    CONSTRAINT album_album_id_pk PRIMARY KEY (album_id),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), -- TO ASK
     CONSTRAINT artist_id_fk 
         FOREIGN KEY (artist_id)
         REFERENCES artist(artist_id)
@@ -39,24 +38,18 @@ CREATE TABLE album(
 -- bpm: Integer (excellent for filtering/analysis).
 
 CREATE TABLE song(
-    song_id BIGSERIAL NOT NULL,
+    song_id BIGSERIAL PRIMARY KEY,
     album_id INTEGER NOT NULL,
     name VARCHAR(100) NOT NULL,
-    release_year INTEGER,
-    duration_seconds INTEGER,
-    bpm INTEGER,
-    CONSTRAINT song_song_id_pk PRIMARY KEY song(song_id),
-    CONSTRAINT algum_album_id 
+    duration_seconds INTEGER CHECK (duration_seconds > 0), -- TO ASK
+    bpm INTEGER CHECK (bpm BETWEEN 20 AND 300), -- TO ASK
+    track_number INTEGER, -- Útil para ordenação
+    CONSTRAINT album_album_id 
         FOREIGN KEY (album_id)
-        REFERENCES album(algum_id)
-        ON DELETE RESTRICT
+        REFERENCES album(album_id)
+        ON DELETE CASCADE -- If album is deleted, so is the songs
         ON UPDATE CASCADE
-    CONSTRAINT album_release_year_pk
-        FOREIGN KEY (release_year)
-        REFERENCES album(release_year)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
-);
+ );
 
 -- Table4: users
 -- id: Serial/Primary Key.
@@ -65,16 +58,16 @@ CREATE TABLE song(
 -- plan: Varchar ('free', 'premium').
 -- created_at: Date (Use the CURRENT_DATE - interval tip).
 
-CREATE TABLE user(
-    user_id BIGSERIAL NOT NULL,
+CREATE TABLE users( -- Plural to differenciate from reserved word
+    user_id BIGSERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    plan VARCHAR(10) NOT NULL,
-    created_at CURRENT_DATE NOR NULL,
-    CONSTRAINT user_user_id_pk PRIMARY KEY (user_id)
+    email VARCHAR(50) NOT NULL UNIQUE,
+    plan VARCHAR(20) NOT NULL DEFAULT 'free', -- TO ASK
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(), -- TO ASK
+    CONSTRAINT chk_plan CHECK (plan IN ('free', 'premium', 'enterprise')) -- TO ASK
 );
 
--- Table4: streaming_history (The "Fact/Transactional" Table)
+-- Table5: streaming_history (The "Fact/Transactional" Table)
 -- id: BigSerial/Primary Key.
 -- user_id: Foreign Key (referencing users).
 -- song_id: Foreign Key (referencing songs).
@@ -82,17 +75,16 @@ CREATE TABLE user(
 -- device: Varchar ('mobile', 'desktop', 'web').
 
 CREATE TABLE streaming_history(
-    streaming_id BIGSERIAL NOT NULL,
+    streaming_id BIGSERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL,
     song_id INTEGER NOT NULL,
-    played_at TIMESTAMP NOT NULL,
-    device VARCHAR(10),
-    CONSTRAINT streaming_history_streaming_id_pk PRIMARY KEY (streaming_id)
+    played_at TIMESTAMP WITH TIME ZONE NOT NULL, -- TO ASK
+    device VARCHAR(20) NOT NULL,
     CONSTRAINT user_user_id_fk
         FOREIGN KEY (user_id)
-        REFERENCES user(user_id)
+        REFERENCES users(user_id)
         ON DELETE RESTRICT
-        ON UPDATE CASCADE
+        ON UPDATE CASCADE,
     CONSTRAINT song_song_id_pk
         FOREIGN KEY (song_id)
         REFERENCES song(song_id)

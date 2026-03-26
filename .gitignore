@@ -5,6 +5,9 @@ postgres_data/
 .DS_Store
 Thumbs.db
 
+# Linux files
+.directory
+
 # VS Code settings
 .vscode/
 
@@ -15,3 +18,12 @@ npm-debug.log*
 # Python/Env (se usar para ETL futuramente)
 __pycache__/
 .env
+
+# python environment
+.venv/
+__pycache__/
+*.pyc
+
+# Data and SQL
+# this just after the python code is running and I sent the 01-create-table.sql to git
+# .sql 

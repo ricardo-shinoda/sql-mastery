@@ -1,18 +1,21 @@
+version: '3.8'
+
 services:
-  postgres-db:
-    image: postgres:latest
-    container_name: sql_study_postgres
+  db:
+    image: postgres:15-alpine
+    container_name: music_postgres
+    restart: always
     environment:
-      POSTGRES_USER: ${DB_USER} 
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ricardo
+      POSTGRES_PASSWORD: 1234  # Change this to your actual password
       POSTGRES_DB: sql_study
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
-      # Ajustamos aqui para o novo padrão recomendado pelo log
-      - postgres_data:/var/lib/postgresql
+      # This maps your local scripts to the container's init folder
       - ./scripts/db-init:/docker-entrypoint-initdb.d
-    restart: unless-stopped
+      # This persists your data even if the container is deleted
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:
